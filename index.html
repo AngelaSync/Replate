@@ -316,7 +316,7 @@ const boostActive = l => l.boosted && l.boostUntil>now();
 function matches(l){
   const sh=shop(l.shopId), q=S.q.trim().toLowerCase();
   if(q && ![l.name,sh.name,sh.type,l.cat,l.desc].join(" ").toLowerCase().includes(q)) return false;
-  const cats=S.chips.filter(c=>["Bread","Pastries","Meals","Drinks"].includes(c));
+  const cats=S.chips.filter(c=>["Bread","Pastries","Meals"].includes(c));
   if(cats.length && !cats.includes(l.cat)) return false;
   if(S.chips.includes("under50") && !(l.price<50)) return false;
   if(S.chips.includes("near") && !(dist(sh)<=1.0)) return false;
@@ -394,7 +394,7 @@ function browseView(){
   <h1>Good food, nearby, for less.</h1>
   <p class="sub">Reserve leftovers from local shops. Check the food, then pay at the counter.</p>
   <label for="q" class="search">${I.search}<input id="q" type="search" placeholder="bread near me, under ₱50…" value="${esc(S.q)}" autocomplete="off" aria-label="Search food or shops"></label>
-  <div class="chips" role="group" aria-label="Filters">${chip("Bread","Bread")}${chip("Pastries","Pastries")}${chip("Meals","Meals")}${chip("Drinks","Drinks")}${chip("under50","Under ₱50")}${chip("near","Within 1 km")}${chip("today","Pickup today")}</div>
+  <div class="chips" role="group" aria-label="Filters">${chip("Bread","Bread")}${chip("Pastries","Pastries")}${chip("Meals","Meals")}${chip("under50","Under ₱50")}${chip("near","Within 1 km")}${chip("today","Pickup today")}</div>
   <div id="browsebody">${browseBody()}</div>`;
 }
 function browseBody(){
@@ -702,7 +702,7 @@ function formSheet(id){
     <span class="small">Take a photo of the actual leftovers.</span></div></div>
     <input id="f-photo" type="file" accept="image/*" hidden></div>
   <div class="field"><label for="f-name">Item name</label><input id="f-name" maxlength="40" value="${esc(v.name)}" placeholder="Pandesal, 5 pcs"></div>
-  <div class="grid2"><div class="field"><label for="f-cat">Category</label><select id="f-cat">${["Bread","Pastries","Meals","Drinks"].map(c=>`<option ${v.cat===c?"selected":""}>${c}</option>`).join("")}</select></div>
+  <div class="grid2"><div class="field"><label for="f-cat">Category</label><select id="f-cat">${["Bread","Pastries","Meals"].map(c=>`<option ${v.cat===c?"selected":""}>${c}</option>`).join("")}</select></div>
   <div class="field"><label for="f-qty">Quantity</label><input id="f-qty" type="number" min="1" max="99" value="${v.qty||1}"></div></div>
   <div class="field"><label for="f-desc">Description</label><input id="f-desc" maxlength="90" value="${esc(v.desc)}" placeholder="Baked this morning"></div>
   <div class="grid2"><div class="field"><label for="f-orig">Original price (₱)</label><input id="f-orig" type="number" min="1" value="${v.orig}"></div>
